@@ -1,7 +1,6 @@
-NAME = fdf.a
+NAME = fdf
 
 FLAGS = -Wall -Werror -Wextra
-
 LDFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 
 LIBFT = libft/
@@ -18,30 +17,34 @@ LIBX_LIB = $(LIBX)libmlx_Linux.a
 all: $(NAME)
 
 $(NAME): $(LIBFT_LIB) $(GNL_LIB) $(LIBX_LIB) $(OBJECTS)
-	@ar rcs $(NAME) $(OBJECTS) $(LIBFT_LIB) $(GNL_LIB) $(LIBX_LIB)
+	@cc $(FLAGS) $(OBJECTS) $(LIBFT_LIB) $(GNL_LIB) $(LIBX_LIB) $(LDFLAGS) -o $(NAME)
+	@echo "Executável '$(NAME)' criado com sucesso!"
 
 .c.o:
-	cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c $< -o $@
 
 $(LIBFT_LIB):
-	$(MAKE) -C $(LIBFT)
+	@$(MAKE) -C $(LIBFT)
 
 $(GNL_LIB):
-	$(MAKE) -C $(GNL)
+	@$(MAKE) -C $(GNL)
 
 $(LIBX_LIB):
-	$(MAKE) -C $(LIBX)
+	@$(MAKE) -C $(LIBX)
 
 clean:
 	@rm -f $(OBJECTS)
-	$(MAKE) -C $(LIBFT) clean
-	$(MAKE) -C $(GNL) clean
-	$(MAKE) -C $(LIBX) clean
+	@$(MAKE) -C $(LIBFT) clean
+	@$(MAKE) -C $(GNL) clean
+	@$(MAKE) -C $(LIBX) clean
 
 fclean: clean
 	@rm -f $(NAME)
-	$(MAKE) -C $(LIBFT) fclean
-	$(MAKE) -C $(GNL) fclean
-	$(MAKE) -C $(LIBX) fclean
+	@$(MAKE) -C $(LIBFT) fclean
+	@$(MAKE) -C $(GNL) fclean
+	@$(MAKE) -C $(LIBX) fclean
 
 re: fclean all
+
+.PHONY: all clean fclean re
+

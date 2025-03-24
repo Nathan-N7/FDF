@@ -6,7 +6,7 @@
 /*   By: natrodri <natrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:46:32 by natrodri          #+#    #+#             */
-/*   Updated: 2025/01/09 15:52:12 by natrodri         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:09:43 by natrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,23 @@ void	variable_value(t_app *app, t_matriz *matriz, t_image *img)
 		app->offset_y = 0;
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_app		app;
 	t_matriz	matriz;
 	t_image		img;
 	int			fd;
 
-	fd = open("test_maps/t2.fdf", O_RDONLY);
+	if (argc != 2)
+		return (1);
+	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		return (-1);
 	matriz.x = count_x(get_next_line(fd));
 	matriz.y = count_y(fd);
 	close(fd);
 	variable_value(&app, &matriz, &img);
-	fd = open("test_maps/t2.fdf", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		return (-1);
 	creat_matriz(&matriz, fd);
